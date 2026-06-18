@@ -41,7 +41,7 @@ app.put("/novels/:id", async (req, res) => {
   try {
     const { id } = req.params
     const { title, author, year_published } = req.body
-    const query = "UPDATE Books SET title=$1,author=$2,year_published = $3 WHERE id=$4"
+    const query = "UPDATE Books SET title=$1,author=$2,year_published = $3 WHERE id=$4 RETURNING *"
     const result = await client.query(query, [title, author, year_published, id])
     if (result.rowCount === 0) {
       res.status(404).json({ "status": "fail", "message": "post not found" })
